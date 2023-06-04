@@ -1,20 +1,23 @@
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
+import { LoadingSpinner } from "~/components/loading";
 import { api } from "~/utils/api";
 
 export const KeyModal = () => {
   const [open, setOpen] = useState(false);
-  const [key, setKey] = useState('')
-  const user = useUser()
+  const [key, setKey] = useState("");
+  const user = useUser();
 
-  const { mutate } = api.repo.upsertKey.useMutation({
+  const { mutate } = api.key.upsertKey.useMutation({
     onSuccess: () => {
-      setOpen(false)
+      setOpen(false);
     },
-  })
+  });
+
+  const { data, isLoading } = api.key.getKey.useQuery();
 
   return (
-    <div className="relative ">
+    <div className="relative">
       <button
         onClick={() => {
           setOpen(true);
@@ -24,21 +27,24 @@ export const KeyModal = () => {
       </button>
       {open && (
         <div className="absolute right-0 mt-3 flex w-[500px] flex-col gap-5 rounded-md border-[1px] border-[#2f353c] bg-[#161b22] p-5 shadow-sm">
-          <div className="font-semibold">Enter your SSH key</div>
-          <textarea
-            className="grow rounded-md border-[1px] border-[#2f353c] bg-[#02040a] p-3 text-xs outline-none font-normal"
-            cols={40}
-            rows={11}
-            onChange={(e) => {console.log(key);setKey(e.target.value)}}
-            defaultValue={'badud'}
-          ></textarea>
+          <span className="font-semibold">Enter your SSH key</span>
+          <div className="flex justify-center items-center">
+            {isLoading && <LoadingSpinner size={60}/>}
+            <textarea
+              className="grow rounded-md border-[1px] border-[#2f353c] bg-[#02040a] p-3 text-xs font-normal outline-none w-full"
+              cols={40}
+              rows={11}
+              onChange={(e) => {
+                setKey(e.target.value);
+              }}
+              defaultValue={data ? data : ''}
+              disabled={isLoading}
+            ></textarea>
+          </div>
           <button
             onClick={() => {
               if (user?.user?.username) {
-                mutate({
-                  userId: user?.user?.username,
-                  sshKey: key
-                })
+                mutate(key);
               }
             }}
             className="w-fit self-end rounded-md bg-[#238636] px-4 py-2 font-semibold"
