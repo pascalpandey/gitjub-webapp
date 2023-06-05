@@ -29,8 +29,8 @@ import { clerkClient } from "@clerk/nextjs";
 export const createTRPCContext = async (_opts: CreateNextContextOptions) => {
   const { req } = _opts;
   const sesh = getAuth(req);
-  
-  var userId = null;
+
+  let userId = null;
   if (sesh.userId) {
     const user = await clerkClient.users.getUser(sesh.userId);
     userId = user.username
