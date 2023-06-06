@@ -7,9 +7,7 @@ export const userRouter = createTRPCRouter({
     return users;
   }),
   createUser: privateProcedure
-    .input(
-      z.string()
-    )
+    .input(z.string())
     .mutation(async ({ ctx, input }) => {
       await ctx.prisma.user.create({
         data: {
@@ -19,7 +17,14 @@ export const userRouter = createTRPCRouter({
         },
       });
     }),
-  getById: privateProcedure.query(async ({ ctx }) => {
+  getById: privateProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return await ctx.prisma.user.findUnique({
+      where: {
+        id: input,
+      },
+    });
+  }),
+  getSelf: privateProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.findUnique({
       where: {
         id: ctx.userId,

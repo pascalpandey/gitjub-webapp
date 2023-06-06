@@ -5,11 +5,16 @@ import { Fragment, useState } from "react";
 import { Layout } from "~/layout";
 import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";
+import { LoadingDiv } from "~/components/loading";
+import Image from "next/image";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [key, setKey] = useState("");
-  const { data } = api.user.getById.useQuery()
+  const { data: userData } = api.user.getSelf.useQuery();
+  const { data: usersData, isLoading: usersLoading } =
+    api.user.getAll.useQuery();
 
   const { mutate } = api.user.createUser.useMutation({
     onSuccess: () => {
@@ -19,10 +24,10 @@ const Home: NextPage = () => {
   });
 
   useEffect(() => {
-    if (data !== undefined && data === null){
-      setIsOpen(true)
+    if (userData !== undefined && userData === null) {
+      setIsOpen(true);
     }
-  }, [data])
+  }, [userData]);
 
   return (
     <>
@@ -30,7 +35,9 @@ const Home: NextPage = () => {
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => {setIsOpen(false)}}
+          onClose={() => {
+            setIsOpen(true);
+          }}
         >
           <Transition.Child
             as={Fragment}
@@ -59,13 +66,13 @@ const Home: NextPage = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-200"
                   >
-                    This is your first sign in
+                    This is your first sign in!
                   </Dialog.Title>
                   <p className="my-2 text-sm text-gray-300">
-                    Please enter your machine's SSH key to proceed
+                    {`Please enter your machine's SSH key to proceed.`}
                   </p>
                   <textarea
-                    className="w-full grow rounded-md border-[1px] border-[#2f353c] bg-[#02040a] p-3 font-mono text-sm font-normal outline-none text-white"
+                    className="w-full grow rounded-md border-[1px] border-[#2f353c] bg-[#02040a] p-3 font-mono text-sm font-normal text-white outline-none"
                     rows={11}
                     onChange={(e) => {
                       setKey(e.target.value);
@@ -88,11 +95,29 @@ const Home: NextPage = () => {
         </Dialog>
       </Transition>
       <Layout>
-        <div className="flex flex-col gap-4">
-          <span className="text-3xl font-semibold text-white">Users</span>
-          <span className="text-3xl font-semibold text-white">
-            Repositories
-          </span>
+        <div className="flex w-full flex-col px-52 pt-6">
+          <span className="text-xl font-semibold text-white">Users</span>
+          <div className="min-h-4 flex flex-wrap gap-4 py-6">
+            {usersLoading && <LoadingDiv size={30} />}
+            {usersData?.map((data, i) => (
+              <div
+                key={i}
+                className="flex w-72 items-center gap-3 rounded-md bg-slate-800 p-5"
+              >
+                <Image
+                  src={data.imageUrl}
+                  className="h-14 w-14 rounded-full"
+                  alt={`${data.id}'s profile picture`}
+                  width={56}
+                  height={56}
+                />
+                <Link href={`/${data.id}`}>
+                  <span className="text-white hover:text-blue-400">{`${data.id} `}</span>
+                </Link>
+              </div>
+            ))}
+          </div>
+          <span className="text-xl font-semibold text-white">Repositories</span>
         </div>
       </Layout>
     </>

@@ -6,15 +6,11 @@ export const keyRouter = createTRPCRouter({
   upsertKey: privateProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.user.upsert({
+      return await ctx.prisma.user.update({
         where: {
           id: ctx.userId,
         },
-        update: {
-          sshKey: input,
-        },
-        create: {
-          id: ctx.userId,
+        data: {
           sshKey: input,
         },
       });

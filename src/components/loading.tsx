@@ -22,3 +22,11 @@ export const LoadingSpinner = (props: { size?: number }) => {
     </div>
   );
 };
+
+export const LoadingDiv = (props: { size?: number }) => {
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <LoadingSpinner size={props.size} />
+    </div>
+  );
+};

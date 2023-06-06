@@ -31,7 +31,7 @@ export default function KeyModal() {
               aria-hidden="true"
             />
           </Popover.Button>
-          <Popover.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-40 backdrop-blur backdrop-filter" />
+          <Popover.Overlay className="fixed inset-0 bg-gray-900 bg-opacity-40 backdrop-blur backdrop-filter z-10" />
           <Transition
             as={Fragment}
             enter="transition ease-out duration-200"

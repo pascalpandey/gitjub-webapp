@@ -100,9 +100,16 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
     });
   }
 
+  if (!ctx.imageUrl) {
+    throw new TRPCError({
+      code: "METHOD_NOT_SUPPORTED",
+    });
+  }
+
   return next({
     ctx: {
       userId: ctx.userId,
+      imageUrl: ctx.imageUrl
     },
   });
 });
