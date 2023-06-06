@@ -50,12 +50,11 @@ export default function KeyModal() {
                   {isLoading && <LoadingSpinner size={60} />}
                   <textarea
                     className="w-full grow rounded-md border-[1px] border-[#2f353c] bg-[#02040a] p-3 font-mono text-sm font-normal outline-none"
-                    cols={20}
                     rows={5}
                     onChange={(e) => {
                       setKey(e.target.value);
                     }}
-                    defaultValue={data ? data : ""}
+                    defaultValue={data ?? ""}
                     disabled={isLoading}
                   ></textarea>
                 </div>

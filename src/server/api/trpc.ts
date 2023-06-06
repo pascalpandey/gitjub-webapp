@@ -31,14 +31,17 @@ export const createTRPCContext = async (_opts: CreateNextContextOptions) => {
   const sesh = getAuth(req);
 
   let userId = null;
+  let imageUrl = null;
   if (sesh.userId) {
     const user = await clerkClient.users.getUser(sesh.userId);
     userId = user.username
+    imageUrl = user.imageUrl
   }
 
   return {
     prisma,
-    userId
+    userId,
+    imageUrl
   };
 };
 

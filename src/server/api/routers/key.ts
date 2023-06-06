@@ -20,13 +20,11 @@ export const keyRouter = createTRPCRouter({
       });
     }),
   getKey: privateProcedure.query(async ({ ctx }) => {
-    if (ctx.userId) {
-      const user = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.userId,
-        },
-      });
-      return user?.sshKey;
-    }
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.userId,
+      },
+    });
+    return user?.sshKey;
   }),
 });

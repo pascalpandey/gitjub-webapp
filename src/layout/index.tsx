@@ -12,7 +12,7 @@ export const Layout = (props: PropsWithChildren) => {
           <SignOutButton />
         </div>
       </div>
-      <main className="flex flex-1 bg-[#0d1116] px-20">{props.children}</main>
+      <main className="flex flex-1 bg-[#0d1116] px-20 pt-4">{props.children}</main>
     </div>
   );
 };
