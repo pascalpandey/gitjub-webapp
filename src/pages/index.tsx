@@ -99,20 +99,20 @@ const Home: NextPage = () => {
           <span className="text-xl font-semibold text-white">Users</span>
           <div className="min-h-4 flex flex-wrap gap-4 py-6">
             {usersLoading && <LoadingDiv size={30} />}
-            {usersData?.map((data, i) => (
+            {usersData?.map((user, i) => (
               <div
                 key={i}
                 className="flex w-72 items-center gap-3 rounded-md bg-slate-800 p-5"
               >
                 <Image
-                  src={data.imageUrl}
+                  src={user.imageUrl}
                   className="h-14 w-14 rounded-full"
-                  alt={`${data.id}'s profile picture`}
+                  alt={`${user.id}'s profile picture`}
                   width={56}
                   height={56}
                 />
-                <Link href={`/${data.id}`}>
-                  <span className="text-white hover:text-blue-400">{`${data.id} `}</span>
+                <Link href={`/${user.id}`}>
+                  <span className="text-white hover:text-blue-400">{`${user.id} `}</span>
                 </Link>
               </div>
             ))}

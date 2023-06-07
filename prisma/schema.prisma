@@ -15,10 +15,17 @@ model User {
   id String @id
   sshKey String @db.Text
   imageUrl String
-  repositories Repository[]
+  contributedRepositories Repository[] @relation("contributedRepositories")
+  authoredRepositories Repository[] @relation("authoredRepositories")
 }
 
 model Repository {
-  id String @id
-  contributors User[]
+  id Int @id @default(autoincrement())
+  name String
+  authorId String
+  author User @relation("authoredRepositories", fields: [authorId], references: [id], onDelete: Cascade)
+  contributors User[] @relation("contributedRepositories")
+
+  @@index([name])
+  @@unique([authorId, name])
 }
