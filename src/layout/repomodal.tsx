@@ -2,7 +2,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
 
-export default function RepoModal(props: { repoId: string }) {
+export default function RepoModal(props: { repoName: string }) {
   return (
     <Popover className="relative">
       {({ open }) => (
@@ -12,7 +12,7 @@ export default function RepoModal(props: { repoId: string }) {
               ${open ? "" : "text-opacity-90"}
               group inline-flex items-center rounded-md bg-slate-800 px-3 py-2 text-base font-normal text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-opacity-75`}
           >
-            <span>{props.repoId}</span>
+            <span>{props.repoName}</span>
             <ChevronDownIcon
               className={`${open ? "" : "text-opacity-70"}
                 ml-2 h-5 w-5 text-slate-300 transition duration-150 ease-in-out group-hover:text-opacity-80`}

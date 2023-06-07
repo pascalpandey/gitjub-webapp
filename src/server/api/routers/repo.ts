@@ -1,6 +1,13 @@
 import { z } from "zod";
 import { createTRPCRouter, privateProcedure } from "~/server/api/trpc";
-import { Axios } from "axios";
+import axios from "axios";
+
+interface DirItem {
+  path: string;
+  isDirectory: boolean;
+}
+
+type DirResponse = Array<DirItem>;
 
 export const repoRouter = createTRPCRouter({
   getByUser: privateProcedure
@@ -16,5 +23,16 @@ export const repoRouter = createTRPCRouter({
       });
       return data?.authoredRepositories;
     }),
-  // getByPath: privateProcedure.input(z.object(userId:))
+  getBranchPath: privateProcedure
+    .input(
+      z.object({ userId: z.string(), repoName: z.string(), branch: z.string() })
+    )
+    .query(async ({ input }) => {
+      const response = await axios.get<DirResponse>(
+        `${process.env.GIT_SERVER_IP as string}/${input.userId}/${
+          input.repoName
+        }.git/${input.branch}`
+      );
+      return response.data
+    }),
 });

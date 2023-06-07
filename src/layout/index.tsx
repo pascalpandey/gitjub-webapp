@@ -24,10 +24,10 @@ export const Layout = (props: PropsWithChildren) => {
             <UserModal userId={router.query.userId as string} />
           </div>
         )}
-        {router.query?.repoId && (
+        {router.query?.repoName && (
           <div className="flex flex-row items-center gap-8">
             <span className="text-gray-500 font-semibold text-xl">{'/'}</span>
-            <RepoModal repoId={router.query.repoId as string} />
+            <RepoModal repoName={router.query.repoName as string} />
             <span className="text-gray-500 font-semibold text-xl">{'/'}</span>
             <RepoDirModal repoDir={repoDir}/>
           </div>
