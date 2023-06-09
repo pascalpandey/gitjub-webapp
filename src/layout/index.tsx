@@ -14,25 +14,25 @@ export const Layout = (props: PropsWithChildren) => {
 
   return (
     <div className="flex h-screen flex-col">
-      <div className="flex h-28 flex-row items-center bg-[#161b22] px-20 gap-8">
+      <div className="flex h-28 flex-row items-center bg-[#161b22] px-20 gap-6">
         <Link href={"/"}>
           <span className="text-lg font-semibold text-white">GITJUB</span>
         </Link>
         {router.query?.userId && (
-          <div className="flex flex-row items-center gap-8">
+          <div className="flex flex-row items-center gap-5">
             <span className="text-gray-500 font-semibold text-xl">{'/'}</span>
             <UserModal userId={router.query.userId as string} />
           </div>
         )}
         {router.query?.repoName && (
-          <div className="flex flex-row items-center gap-8">
+          <div className="flex flex-row items-center gap-5">
             <span className="text-gray-500 font-semibold text-xl">{'/'}</span>
             <RepoModal repoName={router.query.repoName as string} />
             <span className="text-gray-500 font-semibold text-xl">{'/'}</span>
             <RepoDirModal repoDir={repoDir}/>
           </div>
         )}
-        <div className="ml-auto flex gap-8 font-medium text-white">
+        <div className="ml-auto flex gap-5 font-medium text-white">
           <KeyModal />
           <SignOutButton />
         </div>

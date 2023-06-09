@@ -8,6 +8,7 @@ interface DirItem {
 }
 
 type DirResponse = Array<DirItem>;
+type EntryResponse = DirResponse | string;
 
 export const repoRouter = createTRPCRouter({
   getByUser: privateProcedure
@@ -23,7 +24,7 @@ export const repoRouter = createTRPCRouter({
       });
       return data?.authoredRepositories;
     }),
-  getBranchPath: privateProcedure
+  getBranchOverview: privateProcedure
     .input(
       z.object({ userId: z.string(), repoName: z.string(), branch: z.string() })
     )
@@ -33,6 +34,24 @@ export const repoRouter = createTRPCRouter({
           input.repoName
         }.git/${input.branch}`
       );
-      return response.data
+      return response.data;
+    }),
+  getBranchEntry: privateProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        repoName: z.string(),
+        branch: z.string(),
+        path: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      const response = await axios.get<EntryResponse>(
+        `${process.env.GIT_SERVER_IP as string}/${input.userId}/${
+          input.repoName
+        }.git/${input.branch}/${input.path}`
+      );
+      console.log(response.data, typeof(response.data))
+      return response.data;
     }),
 });
