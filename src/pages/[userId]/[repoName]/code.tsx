@@ -81,7 +81,7 @@ const RepoCode: NextPage = () => {
                   className={`flex flex-row items-center gap-4 border-slate-700 p-2 hover:bg-slate-700/50 w-full`}
                 >
                   <DocumentIcon className="h-6 w-6 text-slate-500" />
-                  <span className="text-white hover:text-blue-400">
+                  <span className="text-white">
                     {entry.path}
                   </span>
                 </div>
