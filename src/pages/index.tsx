@@ -95,7 +95,7 @@ const Home: NextPage = () => {
         </Dialog>
       </Transition>
       <Layout>
-        <div className="flex w-full flex-col px-52 pt-6">
+        <div className="flex w-full flex-col px-52">
           <span className="text-xl font-semibold text-white">Users</span>
           <div className="min-h-4 flex flex-wrap gap-4 py-6">
             {usersLoading && <LoadingDiv size={30} />}

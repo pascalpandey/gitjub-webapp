@@ -21,13 +21,12 @@ const RepoOverview: NextPage = () => {
 
   return (
     <Layout>
-      <div className="flex w-full flex-col px-52 pt-6">
+      <div className="flex w-full flex-col px-52">
         {isLoading && <LoadingDiv size={30} />}
         <div className="rounded-md bg-slate-800">
           {data?.map((entry, i) => (
-            <Link href={`/${userId}/${repoName}/code?branch=${branch}&path=${entry.path}`}>
+            <Link href={`/${userId}/${repoName}/code?branch=${branch}&path=${entry.path}`} key={i}>
               <div
-                key={i}
                 className={`flex flex-row items-center gap-4 p-4 ${
                   i === 0 ? "rounded-t-md" : "border-t-[1px]"
                 } ${

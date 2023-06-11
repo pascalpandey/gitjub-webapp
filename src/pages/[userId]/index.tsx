@@ -19,7 +19,7 @@ const User: NextPage = () => {
 
   return (
     <Layout>
-      <div className="flex w-full flex-col px-52 pt-6">
+      <div className="flex w-full flex-col px-52">
         <div className="flex flex-row">
           <div className="relative flex h-36 w-44 flex-col items-center pr-7">
             {userLoading ? (
