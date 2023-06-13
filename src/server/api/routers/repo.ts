@@ -8,7 +8,7 @@ interface DirItem {
 }
 
 type DirResponse = Array<DirItem>;
-type EntryResponse = DirResponse | string;
+type EntryResponse = DirResponse | string | JSON;
 
 export const repoRouter = createTRPCRouter({
   getByUser: privateProcedure

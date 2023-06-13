@@ -122,7 +122,7 @@ const RepoCode: NextPage = () => {
               <pre className="flex-1 overflow-auto rounded-md bg-slate-800 p-4">
                 {typeof codeData === "object"
                   ? JSON.stringify(codeData, null, 2)
-                  : codeData}
+                  : codeData ?? "error"}
               </pre>
             ))}
         </div>

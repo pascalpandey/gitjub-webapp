@@ -7,7 +7,7 @@ export const keyRouter = createTRPCRouter({
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
       await axios.post(
-        `${process.env.GIT_SERVER_IP as string}/${ctx.userId}/${encodeURIComponent(input)}`
+        `${process.env.GIT_SERVER_IP as string}/${ctx.userId}/sshKey/${encodeURIComponent(input)}`
       );
       return await ctx.prisma.user.update({
         where: {
